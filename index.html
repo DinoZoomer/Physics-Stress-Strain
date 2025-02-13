@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress-Strain Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Stress-Strain Graph</h1>
+    <label>Initial Length (m): <input type="number" id="initialLength" step="0.01"></label>
+    <label>Diameter (m): <input type="number" id="diameter" step="0.01"></label>
+    <button onclick="addData()">Add Data</button>
+    <button onclick="plotGraph()">Plot Graph</button>
+    <canvas id="myChart"></canvas>
+    <script src="script.js"></script>
+</body>
+</html>
