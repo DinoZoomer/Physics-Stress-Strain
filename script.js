@@ -1,22 +1,3 @@
-function addRow() {
-    let table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
-
-    let newRow = table.insertRow();
-    
-    let massCell = newRow.insertCell(0);
-    let extCell = newRow.insertCell(1);
-    let actionCell = newRow.insertCell(2);
-
-    massCell.innerHTML = `<input type="number" step="0.01" class="mass">`;
-    extCell.innerHTML = `<input type="number" step="0.01" class="extension">`;
-    actionCell.innerHTML = `<button onclick="deleteRow(this)">Delete</button>`;
-}
-
-function deleteRow(button) {
-    let row = button.parentNode.parentNode;
-    row.parentNode.removeChild(row);
-}
-
 function plotGraph() {
     let initial = parseFloat(document.getElementById("initialLength").value);
     let diameter = parseFloat(document.getElementById("diameter").value);
@@ -49,20 +30,32 @@ function plotGraph() {
         return;
     }
 
+    // Calculate force, stress, and strain correctly
     force = mass.map(m => m * 9.81);
     stress = force.map(f => f / crossSectionalArea);
     strain = extension.map(ext => ext / initial);
 
+    console.log("Masses:", mass);
+    console.log("Extensions:", extension);
+    console.log("Forces:", force);
+    console.log("Stress:", stress);
+    console.log("Strain:", strain);
+
+    // Ensure we clear old graph before drawing a new one
+    let chartStatus = Chart.getChart("myChart"); 
+    if (chartStatus !== undefined) {
+        chartStatus.destroy();
+    }
+
     let ctx = document.getElementById('myChart').getContext('2d');
     new Chart(ctx, {
-        type: 'line',
+        type: 'scatter',
         data: {
-            labels: strain,
             datasets: [{
                 label: 'Stress vs Strain',
-                data: stress,
+                data: strain.map((s, i) => ({ x: s, y: stress[i] })), // Properly map values
                 borderColor: 'blue',
-                fill: false
+                showLine: true
             }]
         },
         options: {
