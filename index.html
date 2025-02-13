@@ -9,11 +9,29 @@
 </head>
 <body>
     <h1>Stress-Strain Graph</h1>
+    
     <label>Initial Length (m): <input type="number" id="initialLength" step="0.01"></label>
     <label>Diameter (m): <input type="number" id="diameter" step="0.01"></label>
-    <button onclick="addData()">Add Data</button>
+    
+    <h2>Input Data</h2>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Mass (kg)</th>
+                <th>Extension (m)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be dynamically added here -->
+        </tbody>
+    </table>
+    
+    <button onclick="addRow()">Add Row</button>
     <button onclick="plotGraph()">Plot Graph</button>
+    
     <canvas id="myChart"></canvas>
+    
     <script src="script.js"></script>
 </body>
 </html>
