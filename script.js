@@ -66,3 +66,20 @@ function plotGraph() {
         }
     });
 }
+function addRow() {
+    let table = document.getElementById("tableBody"); // Use explicit tbody reference
+    let newRow = table.insertRow();
+    
+    let massCell = newRow.insertCell(0);
+    let extCell = newRow.insertCell(1);
+    let actionCell = newRow.insertCell(2);
+
+    massCell.innerHTML = `<input type="number" step="0.01" class="mass">`;
+    extCell.innerHTML = `<input type="number" step="0.01" class="extension">`;
+    actionCell.innerHTML = `<button onclick="deleteRow(this)">Delete</button>`;
+}
+
+function deleteRow(button) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
+}
