@@ -1,16 +1,19 @@
-let mass = [];
-let extension = [];
-let force = [];
-let stress = [];
-let strain = [];
+function addRow() {
+    let table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
+    let newRow = table.insertRow();
+    
+    let massCell = newRow.insertCell(0);
+    let extCell = newRow.insertCell(1);
+    let actionCell = newRow.insertCell(2);
 
-function addData() {
-    let m = parseFloat(prompt("Enter added mass (kg):"));
-    if (m === -1) return;
-    mass.push(m);
+    massCell.innerHTML = `<input type="number" step="0.01" class="mass">`;
+    extCell.innerHTML = `<input type="number" step="0.01" class="extension">`;
+    actionCell.innerHTML = `<button onclick="deleteRow(this)">Delete</button>`;
+}
 
-    let ext = parseFloat(prompt("Enter extension from original (m):"));
-    extension.push(ext);
+function deleteRow(button) {
+    let row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
 }
 
 function plotGraph() {
@@ -18,6 +21,21 @@ function plotGraph() {
     let diameter = parseFloat(document.getElementById("diameter").value);
     let radius = diameter / 2;
     let crossSectionalArea = Math.PI * radius * radius;
+
+    let masses = document.querySelectorAll(".mass");
+    let extensions = document.querySelectorAll(".extension");
+
+    let mass = [], extension = [], force = [], stress = [], strain = [];
+
+    masses.forEach((m, index) => {
+        let massValue = parseFloat(m.value);
+        let extValue = parseFloat(extensions[index].value);
+
+        if (!isNaN(massValue) && !isNaN(extValue)) {
+            mass.push(massValue);
+            extension.push(extValue);
+        }
+    });
 
     force = mass.map(m => m * 9.81);
     stress = force.map(f => f / crossSectionalArea);
