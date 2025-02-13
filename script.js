@@ -1,5 +1,6 @@
 function addRow() {
     let table = document.getElementById("dataTable").getElementsByTagName('tbody')[0];
+
     let newRow = table.insertRow();
     
     let massCell = newRow.insertCell(0);
@@ -19,6 +20,12 @@ function deleteRow(button) {
 function plotGraph() {
     let initial = parseFloat(document.getElementById("initialLength").value);
     let diameter = parseFloat(document.getElementById("diameter").value);
+    
+    if (isNaN(initial) || isNaN(diameter) || initial <= 0 || diameter <= 0) {
+        alert("Please enter valid Initial Length and Diameter values.");
+        return;
+    }
+
     let radius = diameter / 2;
     let crossSectionalArea = Math.PI * radius * radius;
 
@@ -36,6 +43,11 @@ function plotGraph() {
             extension.push(extValue);
         }
     });
+
+    if (mass.length === 0 || extension.length === 0) {
+        alert("Please add valid mass and extension values.");
+        return;
+    }
 
     force = mass.map(m => m * 9.81);
     stress = force.map(f => f / crossSectionalArea);
